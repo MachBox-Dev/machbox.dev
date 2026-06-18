@@ -1,6 +1,8 @@
 import Image from 'next/image'
 
-import { GITHUB, PRODUCTS } from '@/lib/site'
+import { GITHUB, PRODUCTS, TERMINAL_RELEASE } from '@/lib/site'
+
+import { TerminalReleaseBadge } from './TerminalDownloads'
 
 const product = PRODUCTS.terminal
 
@@ -16,6 +18,10 @@ export function TerminalHero() {
         <Image src={product.logo} alt="" fill className="object-contain" sizes="112px" priority />
       </div>
 
+      <div className="mb-4 flex justify-center">
+        <TerminalReleaseBadge />
+      </div>
+
       <p className="font-mono text-xs uppercase tracking-[0.22em] text-mach-terminal-dim">
         Open source · Apache-2.0 · no account
       </p>
@@ -29,18 +35,18 @@ export function TerminalHero() {
 
       <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
+          href="#install"
+          className="inline-flex items-center rounded-button border border-mach-terminal-border bg-mach-terminal-subtle px-5 py-2.5 text-sm font-medium text-mach-terminal-bright transition-colors hover:bg-mach-terminal/20"
+        >
+          Download {TERMINAL_RELEASE.version}
+        </a>
+        <a
           href={GITHUB.terminal}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center rounded-button border border-mach-terminal-border bg-mach-terminal-subtle px-5 py-2.5 text-sm font-medium text-mach-terminal-bright transition-colors hover:bg-mach-terminal/20"
-        >
-          View on GitHub
-        </a>
-        <a
-          href="#install"
           className="inline-flex items-center rounded-button border border-mach-border px-5 py-2.5 text-sm font-medium text-mach-fg-soft transition-colors hover:border-mach-terminal-border hover:text-mach-terminal-bright"
         >
-          Build from source
+          View on GitHub
         </a>
       </div>
     </section>
