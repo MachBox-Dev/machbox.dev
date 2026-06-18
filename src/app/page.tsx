@@ -1,4 +1,3 @@
-import { MachBoxLogo } from '@/components/MachBoxLogo'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { ProductCard } from '@/components/ProductCard'
@@ -12,7 +11,6 @@ export default function HomePage() {
       <main className="relative z-10 flex flex-1 flex-col">
         <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-8 md:px-10 md:pb-24 md:pt-16">
           <div className="max-w-3xl">
-            <MachBoxLogo size="lg" priority className="mb-8 shadow-panel" />
             <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-mach-muted">
               Local-first · keyboard-first
             </p>
