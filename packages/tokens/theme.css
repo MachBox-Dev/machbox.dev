@@ -1,0 +1,50 @@
+/**
+ * @mach/tokens — canonical Mach family palette
+ * Triage: neon blue glow (glass/cyan from logo)
+ * Terminal: greenish cyan-green (matrix glow from logo)
+ */
+
+@theme {
+  /* Surfaces */
+  --color-mach-bg: #07080c;
+  --color-mach-bg-elevated: #0d0f14;
+  --color-mach-panel: #111318;
+  --color-mach-panel-soft: #0a0b0f;
+  --color-mach-fg: #e8ecf4;
+  --color-mach-fg-soft: #b8c0d0;
+  --color-mach-muted: #6b7589;
+  --color-mach-border: #1e2433;
+  --color-mach-border-strong: rgba(255, 255, 255, 0.12);
+
+  /* Triage — neon blue */
+  --color-mach-triage: #56d9ff;
+  --color-mach-triage-bright: #7ee8ff;
+  --color-mach-triage-dim: #2eb8e8;
+  --color-mach-triage-glow: rgba(86, 217, 255, 0.42);
+  --color-mach-triage-subtle: rgba(86, 217, 255, 0.1);
+  --color-mach-triage-border: rgba(86, 217, 255, 0.35);
+
+  /* Terminal — greenish glow */
+  --color-mach-terminal: #00d4b8;
+  --color-mach-terminal-bright: #5cebd4;
+  --color-mach-terminal-dim: #00a888;
+  --color-mach-terminal-glow: rgba(0, 212, 184, 0.4);
+  --color-mach-terminal-subtle: rgba(0, 212, 184, 0.09);
+  --color-mach-terminal-border: rgba(0, 212, 184, 0.38);
+
+  /* Brand neutral */
+  --color-mach-accent: #c8d0dc;
+
+  --font-sans: var(--font-geist-sans), "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-card: 1rem;
+  --radius-button: 0.75rem;
+  --radius-pill: 9999px;
+
+  --shadow-triage-glow: 0 0 60px -12px var(--color-mach-triage-glow);
+  --shadow-terminal-glow: 0 0 60px -12px var(--color-mach-terminal-glow);
+  --shadow-panel:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 24px 64px rgba(0, 0, 0, 0.55);
+}

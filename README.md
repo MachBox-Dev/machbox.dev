@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# machbox
 
-## Getting Started
+Umbrella site for the Mach product family — [machbox.dev](https://machbox.dev).
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router)
+- React 19 + Tailwind CSS 4
+- Design tokens in `packages/tokens` (`@mach/tokens`)
+- Deploy target: Vercel
+
+## Domains
+
+| Host | Route |
+|------|-------|
+| `machbox.dev` | Umbrella landing (`/`) |
+| `terminal.machbox.dev` | [Mach Terminal](https://github.com/MachBox-Dev/mach-terminal) product site |
+
+Local terminal subdomain: add `127.0.0.1 terminal.localhost` to `/etc/hosts`, then open `http://terminal.localhost:3000`.
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Product accents
 
-## Learn More
+- **Mach Triage** — neon blue glow (`#56d9ff`)
+- **Mach Terminal** — greenish glow (`#00d4b8`)
 
-To learn more about Next.js, take a look at the following resources:
+Logos live in `public/logos/`. Brand assets:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `public/logos/machbox.png` — umbrella logo (UI, apple-touch)
+- `public/og/machbox.jpg` — Open Graph / social preview (1200×630, ~170KB)
+- `public/machbox.ico` — 32×32 favicon (also copied to `src/app/favicon.ico`)
