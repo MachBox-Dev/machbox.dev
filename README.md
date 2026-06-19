@@ -42,3 +42,5 @@ Logos live in `public/logos/`. Brand assets:
 - `public/logos/machbox.png` — umbrella logo (UI, apple-touch)
 - `public/og/machbox.jpg` — Open Graph / social preview (1200×630, ~170KB)
 - `public/machbox.ico` — 32×32 favicon (also copied to `src/app/favicon.ico`)
+
+Terminal download links are fetched from GitHub Releases at build time and revalidated every hour (ISR). Optional `GITHUB_TOKEN` in Vercel raises API rate limits.

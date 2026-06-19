@@ -13,68 +13,7 @@ export const GITHUB = {
   terminalReleases: 'https://github.com/MachBox-Dev/mach-terminal/releases',
 } as const
 
-const TERMINAL_RELEASE_TAG = 'v0.1.0-rc.1'
-const TERMINAL_RELEASE_BASE = `${GITHUB.terminal}/releases/download/${TERMINAL_RELEASE_TAG}`
-
-export const TERMINAL_RELEASE = {
-  tag: TERMINAL_RELEASE_TAG,
-  version: '0.1.0-rc.1',
-  isPrerelease: true,
-  url: `${GITHUB.terminal}/releases/tag/${TERMINAL_RELEASE_TAG}`,
-} as const
-
 export type DownloadPlatform = 'mac' | 'windows' | 'linux'
-
-export type TerminalDownloadTarget = {
-  id: string
-  platform: DownloadPlatform
-  label: string
-  href: string
-  recommended?: boolean
-  note?: string
-}
-
-/** Installers for the current published release — update when tagging a new release. */
-export const TERMINAL_DOWNLOADS: TerminalDownloadTarget[] = [
-  {
-    id: 'mac-dmg',
-    platform: 'mac',
-    label: 'macOS (Apple Silicon)',
-    href: `${TERMINAL_RELEASE_BASE}/Mach.Terminal_0.1.0_aarch64.dmg`,
-    recommended: true,
-    note: '.dmg',
-  },
-  {
-    id: 'windows-exe',
-    platform: 'windows',
-    label: 'Windows',
-    href: `${TERMINAL_RELEASE_BASE}/Mach.Terminal_0.1.0_x64-setup.exe`,
-    recommended: true,
-    note: '.exe installer',
-  },
-  {
-    id: 'windows-msi',
-    platform: 'windows',
-    label: 'Windows (MSI)',
-    href: `${TERMINAL_RELEASE_BASE}/Mach.Terminal_0.1.0_x64_en-US.msi`,
-    note: '.msi',
-  },
-  {
-    id: 'linux-appimage',
-    platform: 'linux',
-    label: 'Linux',
-    href: `${TERMINAL_RELEASE_BASE}/Mach.Terminal_0.1.0_amd64.AppImage`,
-    recommended: true,
-    note: 'AppImage',
-  },
-  {
-    id: 'linux-deb',
-    platform: 'linux',
-    label: 'Linux (Debian)',
-    href: `${TERMINAL_RELEASE_BASE}/Mach.Terminal_0.1.0_amd64.deb`,
-    note: '.deb',
-  },
-]
 
 export const BRAND = {
   logo: '/logos/machbox.png',
@@ -114,8 +53,6 @@ export const PRODUCTS = {
     repo: GITHUB.terminal,
     releases: GITHUB.terminalReleases,
     license: 'Apache-2.0',
-    version: TERMINAL_RELEASE.version,
-    release: TERMINAL_RELEASE,
   },
 } as const
 

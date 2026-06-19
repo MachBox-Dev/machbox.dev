@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { TERMINAL_RELEASE } from '@/lib/site'
+import type { TerminalReleaseInfo } from '@/lib/terminal-release'
 
 type TerminalDownloadButtonProps = {
   label: string
@@ -27,15 +27,21 @@ export function TerminalDownloadButton({ label, href, recommended, note }: Termi
   )
 }
 
-export function TerminalReleaseBadge() {
+type TerminalReleaseBadgeProps = {
+  release: TerminalReleaseInfo
+}
+
+export function TerminalReleaseBadge({ release }: TerminalReleaseBadgeProps) {
+  const label = release.isPrerelease ? `Pre-release · ${release.version}` : `v${release.version}`
+
   return (
     <Link
-      href={TERMINAL_RELEASE.url}
+      href={release.url}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center rounded-pill border border-mach-terminal-border/60 bg-mach-terminal-subtle px-3 py-1 text-xs font-medium text-mach-terminal-bright transition-colors hover:border-mach-terminal-border"
     >
-      Pre-release · {TERMINAL_RELEASE.version}
+      {label}
     </Link>
   )
 }

@@ -1,12 +1,17 @@
 import Image from 'next/image'
 
-import { GITHUB, PRODUCTS, TERMINAL_RELEASE } from '@/lib/site'
+import { GITHUB, PRODUCTS } from '@/lib/site'
+import type { TerminalReleaseInfo } from '@/lib/terminal-release'
 
 import { TerminalReleaseBadge } from './TerminalDownloads'
 
 const product = PRODUCTS.terminal
 
-export function TerminalHero() {
+type TerminalHeroProps = {
+  release: TerminalReleaseInfo
+}
+
+export function TerminalHero({ release }: TerminalHeroProps) {
   return (
     <section className="relative text-center">
       <div
@@ -19,7 +24,7 @@ export function TerminalHero() {
       </div>
 
       <div className="mb-4 flex justify-center">
-        <TerminalReleaseBadge />
+        <TerminalReleaseBadge release={release} />
       </div>
 
       <p className="font-mono text-xs uppercase tracking-[0.22em] text-mach-terminal-dim">
@@ -38,7 +43,7 @@ export function TerminalHero() {
           href="#install"
           className="inline-flex items-center rounded-button border border-mach-terminal-border bg-mach-terminal-subtle px-5 py-2.5 text-sm font-medium text-mach-terminal-bright transition-colors hover:bg-mach-terminal/20"
         >
-          Download {TERMINAL_RELEASE.version}
+          Download {release.version}
         </a>
         <a
           href={GITHUB.terminal}

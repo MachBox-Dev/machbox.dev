@@ -6,6 +6,9 @@ import { TerminalHeader } from '@/components/terminal/TerminalHeader'
 import { TerminalHero } from '@/components/terminal/TerminalHero'
 import { TerminalInstall } from '@/components/terminal/TerminalInstall'
 import { BRAND, PRODUCTS, SITE } from '@/lib/site'
+import { getTerminalRelease } from '@/lib/terminal-release'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Mach Terminal',
@@ -25,15 +28,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function TerminalSitePage() {
+export default async function TerminalSitePage() {
+  const release = await getTerminalRelease()
+
   return (
     <>
       <TerminalHeader />
 
       <main className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-6 pb-20 pt-4 md:px-10 md:pt-8">
-        <TerminalHero />
+        <TerminalHero release={release} />
         <TerminalFeatures />
-        <TerminalInstall />
+        <TerminalInstall release={release} />
       </main>
 
       <SiteFooter />
