@@ -37,8 +37,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <ProductCard {...PRODUCTS.triage} />
+            <ProductCard {...PRODUCTS.armory} />
             <ProductCard {...PRODUCTS.terminal} />
           </div>
         </section>

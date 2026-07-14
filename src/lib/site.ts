@@ -2,7 +2,7 @@ export const SITE = {
   name: 'MachBox',
   tagline: 'Developer tools built for speed.',
   description:
-    'MachBox builds local-first developer tools — fast triage for your work queue and a speed-first terminal for serious builders.',
+    'MachBox builds local-first developer tools — fast triage for your work queue, a free Armory notes vault, and a speed-first terminal for serious builders.',
   url: 'https://machbox.dev',
 } as const
 
@@ -11,6 +11,22 @@ export const GITHUB = {
   orgName: 'MachBox-Dev',
   terminal: 'https://github.com/MachBox-Dev/mach-terminal',
   terminalReleases: 'https://github.com/MachBox-Dev/mach-terminal/releases',
+  armory: 'https://github.com/mwhobrey/mach-armory',
+} as const
+
+/** Firebase-backed account/billing system of record (TRI-330). */
+export const ACCOUNT = {
+  /** Prefer account.machbox.dev once Firebase Hosting alias is live. */
+  origin: 'https://mach-triage.com',
+  pricing: 'https://mach-triage.com/pricing',
+  checkout(product: 'triage_pro' | 'armory_pro' | 'mach_pro', interval: 'month' | 'year' = 'year') {
+    const params = new URLSearchParams({
+      product,
+      interval,
+      source: 'machbox',
+    })
+    return `${this.origin}/checkout?${params.toString()}`
+  },
 } as const
 
 export type DownloadPlatform = 'mac' | 'windows' | 'linux'
@@ -32,12 +48,27 @@ export const PRODUCTS = {
     name: 'Mach Triage',
     tagline: 'Desktop command center for your work queue',
     description:
-      'Local-first triage across Jira, Linear, GitHub Issues, and local workspaces. Automated standups, Armory macros, and a keyboard-first workflow.',
+      'Local-first triage across Jira, Linear, GitHub Issues, and local workspaces. Automated standups, embedded Armory, and a keyboard-first workflow.',
     href: 'https://mach-triage.com',
     external: true,
     accent: 'triage' as const,
     logo: '/logos/mach-triage.png',
     status: 'available' as const satisfies ProductStatus,
+    buyHref: ACCOUNT.checkout('triage_pro'),
+  },
+  armory: {
+    id: 'armory',
+    name: 'Mach Armory',
+    tagline: 'Local-first notes vault for builders',
+    description:
+      'Free forever for local edit/search/preview. Armory Pro unlocks MCP write, multi-vault, advanced graph, and advanced templates.',
+    href: ACCOUNT.pricing,
+    external: true,
+    accent: 'armory' as const,
+    logo: '/logos/mach-triage.png',
+    status: 'available' as const satisfies ProductStatus,
+    buyHref: ACCOUNT.checkout('armory_pro'),
+    bundleHref: ACCOUNT.checkout('mach_pro'),
   },
   terminal: {
     id: 'terminal',
@@ -56,7 +87,7 @@ export const PRODUCTS = {
   },
 } as const
 
-export type ProductAccent = 'triage' | 'terminal'
+export type ProductAccent = 'triage' | 'terminal' | 'armory'
 
 export const HOSTS = {
   umbrella: ['machbox.dev', 'www.machbox.dev', 'localhost'],

@@ -1,4 +1,4 @@
-import { GITHUB, SITE } from '@/lib/site'
+import { ACCOUNT, GITHUB, SITE } from '@/lib/site'
 
 export function SiteFooter() {
   const year = new Date().getFullYear()
@@ -12,6 +12,9 @@ export function SiteFooter() {
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           <a href="https://mach-triage.com" className="transition-colors hover:text-mach-triage">
             Mach Triage
+          </a>
+          <a href={ACCOUNT.pricing} className="transition-colors hover:text-mach-armory">
+            Mach Armory
           </a>
           <a href="https://terminal.machbox.dev" className="transition-colors hover:text-mach-terminal">
             Mach Terminal

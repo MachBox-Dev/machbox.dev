@@ -32,6 +32,14 @@
   --color-mach-terminal-subtle: rgba(0, 212, 184, 0.09);
   --color-mach-terminal-border: rgba(0, 212, 184, 0.38);
 
+  /* Armory — amber / warm steel */
+  --color-mach-armory: #f0b429;
+  --color-mach-armory-bright: #ffd166;
+  --color-mach-armory-dim: #c4921a;
+  --color-mach-armory-glow: rgba(240, 180, 41, 0.42);
+  --color-mach-armory-subtle: rgba(240, 180, 41, 0.1);
+  --color-mach-armory-border: rgba(240, 180, 41, 0.38);
+
   /* Brand neutral */
   --color-mach-accent: #c8d0dc;
 
@@ -44,6 +52,7 @@
 
   --shadow-triage-glow: 0 0 60px -12px var(--color-mach-triage-glow);
   --shadow-terminal-glow: 0 0 60px -12px var(--color-mach-terminal-glow);
+  --shadow-armory-glow: 0 0 60px -12px var(--color-mach-armory-glow);
   --shadow-panel:
     0 0 0 1px rgba(255, 255, 255, 0.06),
     0 24px 64px rgba(0, 0, 0, 0.55);
