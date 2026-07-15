@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { GITHUB, SITE } from '@/lib/site'
 
 export function SiteFooter() {
@@ -19,6 +21,9 @@ export function SiteFooter() {
           <a href="https://terminal.machbox.dev" className="transition-colors hover:text-mach-terminal">
             Mach Terminal
           </a>
+          <Link href="/changelog" className="transition-colors hover:text-mach-fg-soft">
+            Changelog
+          </Link>
           <a
             href={GITHUB.org}
             target="_blank"
