@@ -5,6 +5,7 @@ import { ArmoryFeatures } from '@/components/armory/ArmoryFeatures'
 import { ArmoryHeader } from '@/components/armory/ArmoryHeader'
 import { ArmoryHero } from '@/components/armory/ArmoryHero'
 import { ArmoryInstall } from '@/components/armory/ArmoryInstall'
+import { ArmoryScreenshots } from '@/components/armory/ArmoryScreenshots'
 import { BRAND, PRODUCTS, SITE } from '@/lib/site'
 import { getArmoryRelease } from '@/lib/armory-release'
 
@@ -37,6 +38,7 @@ export default async function ArmorySitePage() {
 
       <main className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-6 pb-20 pt-4 md:px-10 md:pt-8">
         <ArmoryHero release={release} />
+        <ArmoryScreenshots />
         <ArmoryFeatures />
         <ArmoryInstall release={release} />
       </main>
