@@ -49,7 +49,7 @@ export default function HomePage() {
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">On the horizon</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-mach-fg">Mach Cloud</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-mach-fg-soft">
-              Unified Mach sign-in and cloud conveniences — starting with optional AI providers for
+              Unified Mach sign-in and cloud conveniences, starting with optional AI providers for
               Terminal. Triage will migrate here when the time is right. No rush, no lock-in theater.
             </p>
           </div>

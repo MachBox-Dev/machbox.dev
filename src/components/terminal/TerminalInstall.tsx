@@ -13,7 +13,7 @@ export function TerminalInstall({ release }: TerminalInstallProps) {
   const altDownloads = release.downloads.filter((target) => !target.recommended)
 
   const releaseNote = release.isPrerelease
-    ? 'Release candidate builds from GitHub. Expect rough edges — feedback welcome.'
+    ? 'Release candidate builds from GitHub. Expect rough edges; feedback welcome.'
     : 'Latest stable builds from GitHub Releases.'
 
   return (
@@ -64,7 +64,7 @@ export function TerminalInstall({ release }: TerminalInstallProps) {
           </div>
         ) : (
           <p className="mt-6 text-sm text-mach-muted">
-            Installers are not listed yet — check{' '}
+            Installers are not listed yet. Check{' '}
             <a href={release.url} className="text-mach-terminal-bright hover:underline">
               {release.tag}
             </a>{' '}
@@ -87,7 +87,7 @@ export function TerminalInstall({ release }: TerminalInstallProps) {
       </div>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
-        <div className="panel-surface rounded-card border border-mach-border p-6 md:p-8">
+        <div className="panel-surface min-w-0 rounded-card border border-mach-border p-6 md:p-8">
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">Verify</p>
           <h2 className="mt-3 text-xl font-semibold text-mach-fg">Checksums & signatures</h2>
           <p className="mt-3 text-sm leading-relaxed text-mach-fg-soft">
@@ -104,7 +104,7 @@ export function TerminalInstall({ release }: TerminalInstallProps) {
           </a>
         </div>
 
-        <div className="panel-surface rounded-card border border-mach-border p-6 md:p-8">
+        <div className="panel-surface min-w-0 rounded-card border border-mach-border p-6 md:p-8">
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">Develop</p>
           <h2 className="mt-3 text-xl font-semibold text-mach-fg">Build from source</h2>
           <p className="mt-3 text-sm leading-relaxed text-mach-fg-soft">

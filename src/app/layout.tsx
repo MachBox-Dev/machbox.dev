@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-const defaultTitle = `${SITE.name} — ${SITE.tagline}`
+const defaultTitle = `${SITE.name}: ${SITE.tagline}`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

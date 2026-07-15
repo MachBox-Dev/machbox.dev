@@ -2,7 +2,7 @@ export const SITE = {
   name: 'MachBox',
   tagline: 'Developer tools built for speed.',
   description:
-    'MachBox builds local-first developer tools — fast triage for your work queue, a free Armory notes vault, and a speed-first terminal for serious builders.',
+    'MachBox builds local-first developer tools: fast triage for your work queue, a free Armory notes vault, and a speed-first terminal for serious builders.',
   url: 'https://machbox.dev',
 } as const
 
@@ -37,7 +37,7 @@ export const BRAND = {
   ogImage: '/og/machbox.jpg',
   ogImageWidth: 1200,
   ogImageHeight: 630,
-  ogImageAlt: 'MachBox — developer tools with triage blue and terminal green glow',
+  ogImageAlt: 'MachBox: developer tools with triage blue and terminal green glow',
 } as const
 
 export type ProductStatus = 'available' | 'open-source' | 'coming-soon'
@@ -65,7 +65,7 @@ export const PRODUCTS = {
     href: ACCOUNT.pricing,
     external: true,
     accent: 'armory' as const,
-    logo: '/logos/mach-triage.png',
+    logo: '/logos/mach-armory.png',
     status: 'available' as const satisfies ProductStatus,
     buyHref: ACCOUNT.checkout('armory_pro'),
     bundleHref: ACCOUNT.checkout('mach_pro'),
@@ -75,7 +75,7 @@ export const PRODUCTS = {
     name: 'Mach Terminal',
     tagline: 'Speed-first terminal for builders',
     description:
-      'A native terminal with splits, composer-first input, and optional AI providers — no account required, fully open source.',
+      'A native terminal with splits, composer-first input, and optional AI providers, no account required, fully open source.',
     href: 'https://terminal.machbox.dev',
     external: false,
     accent: 'terminal' as const,
@@ -98,31 +98,31 @@ export const TERMINAL_FEATURES = [
   {
     title: 'Composer-first input',
     description:
-      'Type in a dedicated composer while the viewport stays output-focused — no fighting the scrollback for stdin.',
+      'Type in a dedicated composer while the viewport stays output-focused, no fighting the scrollback for stdin.',
   },
   {
     title: 'Splits & sessions',
     description:
-      'Tabs, splits, and reliable session lifecycle — exit overlays, batch restart, and layout restore across relaunches.',
+      'Tabs, splits, and reliable session lifecycle: exit overlays, batch restart, and layout restore across relaunches.',
   },
   {
     title: 'Command palette',
-    description: 'Ctrl/Cmd+K for palette-driven actions — find, scroll, split, and session ops without leaving the keyboard.',
+    description: 'Ctrl/Cmd+K for palette-driven actions: find, scroll, split, and session ops without leaving the keyboard.',
   },
   {
     title: 'Safe paste guard',
     description:
-      'Multiline and risky clipboard payloads get a confirmation card before they hit your shell — no surprise `rm` chains.',
+      'Multiline and risky clipboard payloads get a confirmation card before they hit your shell, no surprise `rm` chains.',
   },
   {
     title: 'Shell integration',
     description:
-      'OSC 7 cwd tracking and optional OSC 133 markers — restart lands where you left off when your shell emits them.',
+      'OSC 7 cwd tracking and optional OSC 133 markers: restart lands where you left off when your shell emits them.',
   },
   {
     title: 'Optional AI (BYOK)',
     description:
-      'OpenAI, Anthropic, Ollama, or custom endpoints — disabled by default, keychain-backed, never required for core terminal use.',
+      'OpenAI, Anthropic, Ollama, or custom endpoints, disabled by default, keychain-backed, never required for core terminal use.',
   },
 ] as const
 
@@ -130,7 +130,7 @@ export const TERMINAL_PRINCIPLES = [
   'No account requirement',
   'No cloud lock-in',
   'Bring your own API keys',
-  'AI is optional — never a dependency',
+  'AI is optional, never a dependency',
 ] as const
 
 export const TERMINAL_QUICK_START = `git clone ${GITHUB.terminal}.git
