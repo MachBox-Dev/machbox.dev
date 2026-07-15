@@ -12,9 +12,18 @@ export const GITHUB = {
   terminal: 'https://github.com/MachBox-Dev/mach-terminal',
   terminalReleases: 'https://github.com/MachBox-Dev/mach-terminal/releases',
   armory: 'https://github.com/mwhobrey/mach-armory',
+  armoryReleases: 'https://github.com/mwhobrey/mach-armory/releases',
 } as const
 
-/** Firebase-backed account/billing system of record (TRI-330). */
+/**
+ * Firebase-backed account/billing system of record (TRI-330).
+ *
+ * `checkout()` builds a URL against the contract owned by mach-triage-web's
+ * `suiteCheckoutPath()` (portal/src/config/productCatalog.ts) — that file is
+ * the canonical definition of the product/interval/source shape. If it
+ * changes, update this to match (mach-armory's Rust
+ * ARMORY_PRO_CHECKOUT_URL constant also needs to stay in sync).
+ */
 export const ACCOUNT = {
   /** Prefer account.machbox.dev once Firebase Hosting alias is live. */
   origin: 'https://mach-triage.com',
@@ -62,7 +71,7 @@ export const PRODUCTS = {
     tagline: 'Local-first notes vault for builders',
     description:
       'Free forever for local edit/search/preview. Armory Pro unlocks MCP write, multi-vault, advanced graph, and advanced templates.',
-    href: ACCOUNT.pricing,
+    href: 'https://armory.machbox.dev',
     external: true,
     accent: 'armory' as const,
     logo: '/logos/mach-armory.png',
@@ -92,6 +101,7 @@ export type ProductAccent = 'triage' | 'terminal' | 'armory'
 export const HOSTS = {
   umbrella: ['machbox.dev', 'www.machbox.dev', 'localhost'],
   terminal: ['terminal.machbox.dev', 'terminal.localhost'],
+  armory: ['armory.machbox.dev', 'armory.localhost'],
 } as const
 
 export const TERMINAL_FEATURES = [
@@ -137,3 +147,42 @@ export const TERMINAL_QUICK_START = `git clone ${GITHUB.terminal}.git
 cd mach-terminal
 npm install
 npm run tauri dev` as const
+
+export const ARMORY_FEATURES = [
+  {
+    title: 'Searchable local notes',
+    description: 'Full-text search across runbooks, prompts, and scratch notes, with #tags in the title for filtering.',
+  },
+  {
+    title: 'Pin beside triage',
+    description: 'Dock Armory as a strip beside the Mach Triage palette, or float it as its own window.',
+  },
+  {
+    title: 'Linking notes',
+    description: 'Type [[ to link another entry by title, plus automatic links from shared tags and body references.',
+  },
+  {
+    title: 'Standalone vault',
+    description: 'Point Armory at a shared markdown vault on disk instead of the embedded notebook, same format either way.',
+  },
+  {
+    title: 'MCP tools (Pro)',
+    description: 'Give Claude, Cursor, and other MCP-compatible AI tools read/write access to your vault, no cloud required.',
+  },
+  {
+    title: 'Free forever core',
+    description: 'Local edit, search, and preview stay free forever. Pro unlocks MCP write, multi-vault, and advanced graph and templates.',
+  },
+] as const
+
+export const ARMORY_QUICK_START = `git clone ${GITHUB.armory}.git
+cd mach-armory
+cargo build --release
+./target/release/mach-armory gui --vault ~/Mach/vaults/default` as const
+
+export const ARMORY_PRINCIPLES = [
+  'Free core, forever',
+  'Local-first storage',
+  'No cloud required for search',
+  'MCP-ready for AI agents (Pro)',
+] as const

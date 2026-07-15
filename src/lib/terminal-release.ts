@@ -1,37 +1,10 @@
-import { GITHUB, type DownloadPlatform } from '@/lib/site'
+import { GITHUB } from '@/lib/site'
+import { resolveRelease, type DownloadTarget, type GitHubReleaseAsset, type ReleaseInfo } from '@/lib/github-release'
 
 export const TERMINAL_RELEASE_REVALIDATE_SECONDS = 3600
 
-export type TerminalDownloadTarget = {
-  id: string
-  platform: DownloadPlatform
-  label: string
-  href: string
-  recommended?: boolean
-  note?: string
-}
-
-export type TerminalReleaseInfo = {
-  tag: string
-  version: string
-  isPrerelease: boolean
-  url: string
-  downloads: TerminalDownloadTarget[]
-  source: 'github' | 'fallback'
-}
-
-type GitHubReleaseAsset = {
-  name: string
-  browser_download_url: string
-}
-
-type GitHubRelease = {
-  tag_name: string
-  html_url: string
-  prerelease: boolean
-  draft: boolean
-  assets: GitHubReleaseAsset[]
-}
+export type TerminalDownloadTarget = DownloadTarget
+export type TerminalReleaseInfo = ReleaseInfo
 
 /** Static fallback when GitHub is unreachable at build time. */
 const FALLBACK_RELEASE: TerminalReleaseInfo = {
@@ -200,60 +173,11 @@ function buildDownloads(assets: GitHubReleaseAsset[]): TerminalDownloadTarget[] 
   return downloads
 }
 
-function pickRelease(releases: GitHubRelease[]): GitHubRelease | undefined {
-  const published = releases.filter((release) => !release.draft)
-  if (published.length === 0) return undefined
-
-  const stable = published.find((release) => !release.prerelease)
-  return stable ?? published[0]
-}
-
-function toReleaseInfo(release: GitHubRelease): TerminalReleaseInfo {
-  const tag = release.tag_name
-  return {
-    tag,
-    version: tag.startsWith('v') ? tag.slice(1) : tag,
-    isPrerelease: release.prerelease,
-    url: release.html_url,
-    downloads: buildDownloads(release.assets),
-    source: 'github',
-  }
-}
-
 export async function getTerminalRelease(): Promise<TerminalReleaseInfo> {
-  try {
-    const headers: HeadersInit = {
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    }
-
-    const token = process.env.GITHUB_TOKEN?.trim()
-    if (token) {
-      headers.Authorization = `Bearer ${token}`
-    }
-
-    const response = await fetch(
-      'https://api.github.com/repos/MachBox-Dev/mach-terminal/releases?per_page=10',
-      {
-        headers,
-        next: { revalidate: TERMINAL_RELEASE_REVALIDATE_SECONDS },
-      },
-    )
-
-    if (!response.ok) {
-      return FALLBACK_RELEASE
-    }
-
-    const releases = (await response.json()) as GitHubRelease[]
-    const latest = pickRelease(releases)
-
-    if (!latest || latest.assets.length === 0) {
-      return FALLBACK_RELEASE
-    }
-
-    const info = toReleaseInfo(latest)
-    return info.downloads.length > 0 ? info : FALLBACK_RELEASE
-  } catch {
-    return FALLBACK_RELEASE
-  }
+  return resolveRelease(
+    'MachBox-Dev/mach-terminal',
+    FALLBACK_RELEASE,
+    TERMINAL_RELEASE_REVALIDATE_SECONDS,
+    buildDownloads,
+  )
 }

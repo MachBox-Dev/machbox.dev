@@ -58,6 +58,10 @@
     text-shadow: 0 0 32px var(--color-mach-terminal-glow);
   }
 
+  .text-glow-armory {
+    text-shadow: 0 0 32px var(--color-mach-armory-glow);
+  }
+
   .panel-surface {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%), var(--color-mach-panel);
     box-shadow: var(--shadow-panel);

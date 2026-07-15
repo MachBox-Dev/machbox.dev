@@ -15,8 +15,9 @@ Umbrella site for the Mach product family — [machbox.dev](https://machbox.dev)
 |------|-------|
 | `machbox.dev` | Umbrella landing (`/`) |
 | `terminal.machbox.dev` | [Mach Terminal](https://github.com/MachBox-Dev/mach-terminal) product site |
+| `armory.machbox.dev` | [Mach Armory](https://github.com/mwhobrey/mach-armory) product site |
 
-Local terminal subdomain: add `127.0.0.1 terminal.localhost` to `/etc/hosts`, then open `http://terminal.localhost:3000`.
+Local subdomains: add `127.0.0.1 terminal.localhost` and `127.0.0.1 armory.localhost` to `/etc/hosts`, then open `http://terminal.localhost:3000` or `http://armory.localhost:3000`.
 
 ## Develop
 
