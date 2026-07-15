@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Mach Armory · ${SITE.name}`,
     description: PRODUCTS.armory.description,
-    url: 'https://armory.machbox.dev',
+    url: PRODUCTS.armory.href,
     images: [
       {
         url: BRAND.ogImage,
