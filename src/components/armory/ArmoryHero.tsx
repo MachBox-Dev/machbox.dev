@@ -1,6 +1,7 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
-import { ACCOUNT, GITHUB, PRODUCTS } from '@/lib/site'
+import { ACCOUNT, PRODUCTS } from '@/lib/site'
 import type { ArmoryReleaseInfo } from '@/lib/armory-release'
 
 import { ArmoryReleaseBadge } from './ArmoryDownloads'
@@ -53,14 +54,12 @@ export function ArmoryHero({ release }: ArmoryHeroProps) {
         >
           Compare plans
         </a>
-        <a
-          href={GITHUB.armory}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/changelog"
           className="inline-flex items-center rounded-button border border-mach-border px-5 py-2.5 text-sm font-medium text-mach-fg-soft transition-colors hover:border-mach-armory-border hover:text-mach-armory-bright"
         >
-          View on GitHub
-        </a>
+          Changelog
+        </Link>
       </div>
     </section>
   )

@@ -6,13 +6,14 @@ export const SITE = {
   url: 'https://machbox.dev',
 } as const
 
+// mach-armory's repo is private (proprietary product) -- no GITHUB.armory*
+// entries. Its downloads and update manifest are hosted on Firebase Storage;
+// see src/lib/armory-release.ts.
 export const GITHUB = {
   org: 'https://github.com/MachBox-Dev',
   orgName: 'MachBox-Dev',
   terminal: 'https://github.com/MachBox-Dev/mach-terminal',
   terminalReleases: 'https://github.com/MachBox-Dev/mach-terminal/releases',
-  armory: 'https://github.com/mwhobrey/mach-armory',
-  armoryReleases: 'https://github.com/mwhobrey/mach-armory/releases',
 } as const
 
 /**
@@ -174,11 +175,6 @@ export const ARMORY_FEATURES = [
     description: 'Local edit, search, and preview stay free forever. Pro unlocks MCP write, multi-vault, and advanced graph and templates.',
   },
 ] as const
-
-export const ARMORY_QUICK_START = `git clone ${GITHUB.armory}.git
-cd mach-armory
-cargo build --release
-./target/release/mach-armory gui --vault ~/Mach/vaults/default` as const
 
 export const ARMORY_PRINCIPLES = [
   'Free core, forever',

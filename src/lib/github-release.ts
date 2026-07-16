@@ -28,7 +28,7 @@ export type ReleaseInfo = {
   isPrerelease: boolean
   url: string
   downloads: DownloadTarget[]
-  source: 'github' | 'fallback'
+  source: 'github' | 'firebase' | 'fallback'
 }
 
 export function versionFromTag(tag: string): string {

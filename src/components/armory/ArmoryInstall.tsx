@@ -1,4 +1,4 @@
-import { ACCOUNT, ARMORY_PRINCIPLES, ARMORY_QUICK_START, GITHUB, PRODUCTS } from '@/lib/site'
+import { ACCOUNT, ARMORY_PRINCIPLES, PRODUCTS } from '@/lib/site'
 import type { ArmoryReleaseInfo } from '@/lib/armory-release'
 
 import { ArmoryDownloadButton, ArmoryReleaseBadge } from './ArmoryDownloads'
@@ -9,23 +9,20 @@ type ArmoryInstallProps = {
 
 export function ArmoryInstall({ release }: ArmoryInstallProps) {
   const product = PRODUCTS.armory
-  const releaseNote = release.isPrerelease
-    ? 'Pre-release build from GitHub. Expect rough edges; feedback welcome.'
-    : 'Latest stable build from GitHub Releases.'
+  const primaryDownloads = release.downloads.filter((target) => target.recommended)
+  const altDownloads = release.downloads.filter((target) => !target.recommended)
 
   return (
     <section id="install" className="scroll-mt-24">
       <div className="mb-8 flex flex-col items-center gap-3 text-center">
         <ArmoryReleaseBadge release={release} />
         <p className="max-w-xl text-sm text-mach-muted">
-          {releaseNote}{' '}
+          Latest stable build.{' '}
           <a
             href={release.url}
-            target="_blank"
-            rel="noopener noreferrer"
             className="text-mach-armory-bright underline decoration-mach-armory-border underline-offset-2 hover:text-mach-armory"
           >
-            {release.tag}
+            See what&apos;s new
           </a>
           .
         </p>
@@ -35,40 +32,30 @@ export function ArmoryInstall({ release }: ArmoryInstallProps) {
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">Downloads</p>
         <h2 className="mt-3 text-xl font-semibold text-mach-fg">Download Mach Armory</h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-mach-fg-soft">
-          Free forever for local edit, search, and preview. No account required. Pick your platform below or browse
-          all assets on{' '}
-          <a
-            href={release.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-mach-armory-bright underline decoration-mach-armory-border underline-offset-2 hover:text-mach-armory"
-          >
-            GitHub Releases
-          </a>
-          .
+          Free forever for local edit, search, and preview. No account required. Pick your platform below.
         </p>
 
-        {release.downloads.length > 0 ? (
+        {primaryDownloads.length > 0 ? (
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            {release.downloads.map((target) => (
+            {primaryDownloads.map((target) => (
               <ArmoryDownloadButton
                 key={target.id}
                 label={target.label}
                 href={target.href}
-                recommended={target.recommended}
+                recommended
                 note={target.note}
               />
             ))}
           </div>
-        ) : (
-          <p className="mt-6 text-sm text-mach-muted">
-            Installers are not listed yet. Check{' '}
-            <a href={release.url} className="text-mach-armory-bright hover:underline">
-              {release.tag}
-            </a>{' '}
-            on GitHub or build from source below.
-          </p>
-        )}
+        ) : null}
+
+        {altDownloads.length > 0 ? (
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {altDownloads.map((target) => (
+              <ArmoryDownloadButton key={target.id} label={target.label} href={target.href} note={target.note} />
+            ))}
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
@@ -102,26 +89,14 @@ export function ArmoryInstall({ release }: ArmoryInstallProps) {
         </div>
 
         <div className="panel-surface min-w-0 rounded-card border border-mach-border p-6 md:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">Develop</p>
-          <h2 className="mt-3 text-xl font-semibold text-mach-fg">Build from source</h2>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-mach-muted">Stay current</p>
+          <h2 className="mt-3 text-xl font-semibold text-mach-fg">Signed automatic updates</h2>
           <p className="mt-3 text-sm leading-relaxed text-mach-fg-soft">
-            Requires the Rust toolchain and platform GUI prerequisites (GTK on Linux). Vaults default to{' '}
-            <code className="text-mach-fg">~/Mach/vaults/default</code>.
+            Armory checks for new versions in the background and never installs anything without a click. Every
+            update is Ed25519-signed at build time and verified against a key baked into the app before it ever
+            touches disk.
           </p>
-          <pre className="mt-4 overflow-x-auto rounded-lg border border-mach-border bg-mach-bg-elevated p-4 font-mono text-xs leading-relaxed text-mach-fg-soft">
-            <code>{ARMORY_QUICK_START}</code>
-          </pre>
-          <p className="mt-4 text-xs text-mach-muted">
-            {release.tag} ·{' '}
-            <a
-              href={GITHUB.armory}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-mach-armory-dim hover:text-mach-armory-bright"
-            >
-              mwhobrey/mach-armory
-            </a>
-          </p>
+          <p className="mt-4 text-xs text-mach-muted">{release.tag}</p>
         </div>
       </div>
 

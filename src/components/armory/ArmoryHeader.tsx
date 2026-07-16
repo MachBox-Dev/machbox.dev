@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
 import { MachBoxLogo } from '@/components/MachBoxLogo'
-import { GITHUB } from '@/lib/site'
 
 export function ArmoryHeader() {
   return (
@@ -20,14 +19,9 @@ export function ArmoryHeader() {
         <a href="#install" className="transition-colors hover:text-mach-armory-bright">
           Install
         </a>
-        <a
-          href={GITHUB.armory}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors hover:text-mach-armory-bright"
-        >
-          GitHub
-        </a>
+        <Link href="/changelog" className="transition-colors hover:text-mach-armory-bright">
+          Changelog
+        </Link>
       </nav>
     </header>
   )

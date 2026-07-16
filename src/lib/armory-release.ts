@@ -1,92 +1,93 @@
-import { GITHUB } from '@/lib/site'
-import { resolveRelease, type DownloadTarget, type GitHubReleaseAsset, type ReleaseInfo } from '@/lib/github-release'
+import type { DownloadTarget, ReleaseInfo } from '@/lib/github-release'
 
 export const ARMORY_RELEASE_REVALIDATE_SECONDS = 3600
 
 export type ArmoryDownloadTarget = DownloadTarget
 export type ArmoryReleaseInfo = ReleaseInfo
 
-/** Static fallback when GitHub is unreachable at build time. */
-const FALLBACK_RELEASE: ArmoryReleaseInfo = {
-  tag: 'v0.2.0',
-  version: '0.2.0',
-  isPrerelease: false,
-  url: `${GITHUB.armory}/releases/tag/v0.2.0`,
-  source: 'fallback',
-  downloads: [
-    {
-      id: 'mac',
-      platform: 'mac',
-      label: 'macOS (Apple Silicon)',
-      href: `${GITHUB.armory}/releases/download/v0.2.0/mach-armory-v0.2.0-macos-aarch64.tar.gz`,
-      recommended: true,
-      note: '.tar.gz',
-    },
-    {
-      id: 'windows',
-      platform: 'windows',
-      label: 'Windows',
-      href: `${GITHUB.armory}/releases/download/v0.2.0/mach-armory-v0.2.0-windows-x86_64.zip`,
-      recommended: true,
-      note: '.zip',
-    },
-    {
-      id: 'linux',
-      platform: 'linux',
-      label: 'Linux',
-      href: `${GITHUB.armory}/releases/download/v0.2.0/mach-armory-v0.2.0-linux-x86_64.tar.gz`,
-      recommended: true,
-      note: '.tar.gz',
-    },
-  ],
+/**
+ * Mach Armory's repo is private and its downloads are real installers, not
+ * GitHub Release assets -- everything is hosted on Firebase Storage
+ * (public/stable/), same bucket mach-triage uses. See
+ * mach-armory/.github/workflows/release.yml and
+ * mach-armory/crates/armory-core/src/updater.rs for the producer/consumer
+ * of the same manifest this fetches the version from.
+ */
+const FIREBASE_BUCKET = 'mach-triage.firebasestorage.app'
+const STABLE_PREFIX = `https://firebasestorage.googleapis.com/v0/b/${FIREBASE_BUCKET}/o/public%2Fstable%2F`
+
+function storageUrl(fileName: string): string {
+  return `${STABLE_PREFIX}${encodeURIComponent(fileName)}?alt=media`
 }
 
-/** Mach Armory ships plain archives (no installers): mach-armory-{tag}-{target}.{tar.gz|zip}. */
-function buildDownloads(assets: GitHubReleaseAsset[]): ArmoryDownloadTarget[] {
-  const downloads: ArmoryDownloadTarget[] = []
+const MANIFEST_URL = storageUrl('Mach-Armory-update-manifest.json')
 
-  for (const asset of assets) {
-    const lower = asset.name.toLowerCase()
+const ARMORY_DOWNLOAD_TARGETS: ArmoryDownloadTarget[] = [
+  {
+    id: 'mac-dmg',
+    platform: 'mac',
+    label: 'macOS (Apple Silicon)',
+    href: storageUrl('Mach-Armory-Mac-Latest.dmg'),
+    recommended: true,
+    note: '.dmg',
+  },
+  {
+    id: 'windows-exe',
+    platform: 'windows',
+    label: 'Windows',
+    href: storageUrl('Mach-Armory-Windows-Latest.exe'),
+    recommended: true,
+    note: '.exe installer',
+  },
+  {
+    id: 'windows-msi',
+    platform: 'windows',
+    label: 'Windows (MSI)',
+    href: storageUrl('Mach-Armory-Windows-Latest.msi'),
+    note: '.msi',
+  },
+  {
+    id: 'linux-appimage',
+    platform: 'linux',
+    label: 'Linux',
+    href: storageUrl('Mach-Armory-Linux-Latest.AppImage'),
+    recommended: true,
+    note: '.AppImage',
+  },
+  {
+    id: 'linux-deb',
+    platform: 'linux',
+    label: 'Linux (.deb)',
+    href: storageUrl('Mach-Armory-Linux-Latest.deb'),
+    note: '.deb',
+  },
+]
 
-    if (lower.includes('macos')) {
-      downloads.push({
-        id: 'mac',
-        platform: 'mac',
-        label: lower.includes('aarch64') ? 'macOS (Apple Silicon)' : 'macOS',
-        href: asset.browser_download_url,
-        recommended: true,
-        note: '.tar.gz',
-      })
-      continue
-    }
+const FALLBACK_VERSION = '0.4.0'
 
-    if (lower.includes('windows')) {
-      downloads.push({
-        id: 'windows',
-        platform: 'windows',
-        label: 'Windows',
-        href: asset.browser_download_url,
-        recommended: true,
-        note: '.zip',
-      })
-      continue
-    }
-
-    if (lower.includes('linux')) {
-      downloads.push({
-        id: 'linux',
-        platform: 'linux',
-        label: 'Linux',
-        href: asset.browser_download_url,
-        recommended: true,
-        note: '.tar.gz',
-      })
-    }
+function releaseFor(version: string, source: ArmoryReleaseInfo['source']): ArmoryReleaseInfo {
+  return {
+    tag: `v${version}`,
+    version,
+    isPrerelease: false,
+    url: 'https://armory.machbox.dev/changelog',
+    downloads: ARMORY_DOWNLOAD_TARGETS,
+    source,
   }
-
-  return downloads
 }
 
 export async function getArmoryRelease(): Promise<ArmoryReleaseInfo> {
-  return resolveRelease('mwhobrey/mach-armory', FALLBACK_RELEASE, ARMORY_RELEASE_REVALIDATE_SECONDS, buildDownloads)
+  try {
+    const response = await fetch(MANIFEST_URL, { next: { revalidate: ARMORY_RELEASE_REVALIDATE_SECONDS } })
+    if (!response.ok) return releaseFor(FALLBACK_VERSION, 'fallback')
+
+    const manifest = (await response.json()) as { version?: unknown }
+    if (typeof manifest.version !== 'string' || !manifest.version) {
+      return releaseFor(FALLBACK_VERSION, 'fallback')
+    }
+
+    return releaseFor(manifest.version, 'firebase')
+  } catch {
+    return releaseFor(FALLBACK_VERSION, 'fallback')
+  }
 }
